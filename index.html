@@ -321,11 +321,11 @@ select{appearance:none;-webkit-appearance:none;background-image:url("data:image/
 textarea{min-height:130px;resize:vertical}
 fieldset{border:0;padding:0;margin:0;min-width:0}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
-.chip{position:relative}
-.chip input{position:absolute;inset:0;width:100%;height:100%;margin:0;padding:0;border:0;background:none;opacity:0;cursor:pointer;-webkit-appearance:none;appearance:none}
+.chip{margin:0;padding:0;border:0;border-radius:6px;background:none;font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .chip span{color:var(--on-night);font-family:var(--body);display:inline-flex;align-items:center;min-height:40px;padding:8px 14px;border:1.5px solid #5A5F9A;border-radius:6px;font-weight:500;font-size:16px;transition:background-color .25s var(--ease-out),border-color .25s var(--ease-out),color .25s var(--ease-out)}
-.chip input:checked+span{background:var(--accent);border-color:var(--accent);color:var(--ink)}
-.chip input:focus-visible+span{outline:3px solid var(--accent);outline-offset:3px}
+.chip[aria-pressed="true"] span{background:var(--accent);border-color:var(--accent);color:var(--ink)}
+.chip:focus-visible{outline:none}
+.chip:focus-visible span{outline:3px solid var(--accent);outline-offset:3px}
 .send{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin-top:8px}
 .send p{font-size:15px;color:var(--on-night-2);max-width:40ch}
 .ok{display:none;margin-top:40px;padding:32px;border:2px solid var(--accent);border-radius:10px}
@@ -396,9 +396,14 @@ h1,h2,h3{overflow-wrap:break-word}
 .news :focus-visible{outline-color:var(--ink)}
 .btn-dark{background:var(--ink);color:#fff}
 .btn-dark:hover{background:#2B3182}
-.consent{grid-column:1/-1;display:flex;gap:10px;align-items:flex-start;font-size:15px;font-weight:500;cursor:pointer}
-.consent input{width:20px;height:20px;accent-color:var(--ink);margin:1px 0 0;flex:none;cursor:pointer}
+.consent{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:flex-start;font-size:15px;font-weight:500;cursor:pointer}
+.consent>span{flex:1 1 0;min-width:0}
+.cbox{flex:none;width:22px;height:22px;margin:0;padding:0;border:2px solid var(--ink);border-radius:5px;background:#fff;cursor:pointer;display:grid;place-items:center;transition:background-color .2s var(--ease-out)}
+.cbox::after{content:"";width:10px;height:5px;margin-top:-3px;border:solid #fff;border-width:0 0 2.5px 2.5px;transform:rotate(-45deg);opacity:0;transition:opacity .15s var(--ease-out)}
+.cbox[aria-checked="true"]{background:var(--ink)}
+.cbox[aria-checked="true"]::after{opacity:1}
 .consent a{color:var(--ink);font-weight:700}
+.cerr{flex-basis:100%;margin-left:32px;font-size:14px;font-weight:700}
 .news-ok{font-weight:600;font-size:18px;max-width:52ch}
 .foot-main{padding-top:56px}
 /* payments + legal */
@@ -725,12 +730,12 @@ h1,h2,h3{overflow-wrap:break-word}
           <div class="f"><label for="adr" data-i="d_adr">Adresse du chantier</label><input id="adr" name="chantier" autocomplete="street-address"></div>
           <fieldset class="f full"><legend data-i="d_prod">Produits souhaités</legend>
             <div class="chips">
-              <label class="chip"><input type="checkbox" name="prod" value="briques"><span data-i="p1">Briques</span></label>
-              <label class="chip"><input type="checkbox" name="prod" value="blocs"><span data-i="p2">Blocs béton</span></label>
-              <label class="chip"><input type="checkbox" name="prod" value="isolation"><span data-i="p3">Isolation</span></label>
-              <label class="chip"><input type="checkbox" name="prod" value="toiture"><span data-i="p4">Toiture</span></label>
-              <label class="chip"><input type="checkbox" name="prod" value="bois"><span data-i="p5">Bois &amp; charpente</span></label>
-              <label class="chip"><input type="checkbox" name="prod" value="outillage"><span data-i="p6">Outillage &amp; accessoires</span></label>
+              <button class="chip" type="button" value="briques" aria-pressed="false"><span data-i="p1">Briques</span></button>
+              <button class="chip" type="button" value="blocs" aria-pressed="false"><span data-i="p2">Blocs béton</span></button>
+              <button class="chip" type="button" value="isolation" aria-pressed="false"><span data-i="p3">Isolation</span></button>
+              <button class="chip" type="button" value="toiture" aria-pressed="false"><span data-i="p4">Toiture</span></button>
+              <button class="chip" type="button" value="bois" aria-pressed="false"><span data-i="p5">Bois &amp; charpente</span></button>
+              <button class="chip" type="button" value="outillage" aria-pressed="false"><span data-i="p6">Outillage &amp; accessoires</span></button>
             </div>
           </fieldset>
           <div class="f full"><label for="msg" data-i="d_msg">Votre demande</label><textarea id="msg" name="message" data-ip="d_msgp" placeholder="Quantités, date souhaitée, accès au chantier"></textarea></div>
@@ -769,7 +774,7 @@ h1,h2,h3{overflow-wrap:break-word}
           <input id="nmail" name="email" type="email" autocomplete="email" required placeholder="votre@email.be" data-ip="nl_ph">
           <input type="hidden" name="subject" value="Inscription à la newsletter" data-ival="nl_subj">
           <button class="btn btn-dark" type="submit"><span data-i="nl_btn">S'inscrire à la newsletter</span><span class="arr" aria-hidden="true">→</span></button>
-          <label class="consent"><input type="checkbox" name="consent" required><span><span data-i="nl_c1">J'accepte la</span> <a href="legal.html#privacy" data-i="nl_c2">politique de confidentialité</a>.</span></label>
+          <div class="consent"><button class="cbox" type="button" role="checkbox" aria-checked="false" aria-labelledby="consent-l"></button><span id="consent-l"><span data-i="nl_c1">J'accepte la</span> <a href="legal.html#privacy" data-i="nl_c2">politique de confidentialité</a>.</span><p class="cerr" id="consent-e" hidden data-i="nl_err">Cochez la case pour accepter la politique de confidentialité.</p></div>
         </form>
         <p class="news-ok" id="news-ok" role="status" tabindex="-1" hidden data-i="nl_ok">Presque fini&nbsp;: votre application e-mail s'est ouverte. Cliquez sur Envoyer pour confirmer votre inscription.</p>
       </div>
@@ -1050,11 +1055,14 @@ function countUp(now){
 
 /* ---------------- product buttons preselect the form ---------------- */
 document.querySelectorAll('[data-prod]').forEach(btn => btn.addEventListener('click', () => {
-  const box = document.querySelector(`input[name=prod][value="${btn.dataset.prod}"]`);
-  if (box) box.checked = true;
+  const chip = document.querySelector(`.chip[value="${btn.dataset.prod}"]`);
+  if (chip) chip.setAttribute('aria-pressed', 'true');
   document.getElementById('devis').scrollIntoView({ behavior: RM.matches ? 'auto' : 'smooth' });
   setTimeout(() => document.getElementById('nom').focus({ preventScroll:true }), RM.matches ? 0 : 700);
 }));
+
+/* ---------------- product chips: toggle buttons, no checkboxes for browser extensions to decorate ---------------- */
+document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () => c.setAttribute('aria-pressed', String(c.getAttribute('aria-pressed') !== 'true'))));
 
 /* ---------------- form: mailto ---------------- */
 const form = document.getElementById('form');
@@ -1062,7 +1070,7 @@ form.addEventListener('submit', e => {
   e.preventDefault();
   if (!form.reportValidity()) return;
   const fd = new FormData(form);
-  const prods = fd.getAll('prod').map(v => document.querySelector(`input[name=prod][value="${v}"] + span`).textContent.trim());
+  const prods = [...form.querySelectorAll('.chip[aria-pressed="true"]')].map(c => c.textContent.trim());
   const L = txt;
   const lines = [
     `${L('d_nom')}: ${fd.get('nom')}`,
@@ -1157,9 +1165,16 @@ RM.addEventListener('change', e => { if (e.matches) { pinFinal(); disableScrub()
 
 /* ---------------- newsletter: mailto ---------------- */
 const news = document.getElementById('news'), newsOk = document.getElementById('news-ok');
+const cbox = news.querySelector('.cbox'), cerr = document.getElementById('consent-e');
+function setConsent(on){
+  cbox.setAttribute('aria-checked', String(on));
+  if (on) { cerr.hidden = true; cbox.removeAttribute('aria-invalid'); cbox.removeAttribute('aria-describedby'); }
+}
+news.querySelector('.consent').addEventListener('click', e => { if (!e.target.closest('a, .cerr')) setConsent(cbox.getAttribute('aria-checked') !== 'true'); });
 news.addEventListener('submit', e => {
   e.preventDefault();
   if (!news.reportValidity()) return;
+  if (cbox.getAttribute('aria-checked') !== 'true') { cerr.hidden = false; cbox.setAttribute('aria-invalid', 'true'); cbox.setAttribute('aria-describedby', 'consent-e'); cbox.focus(); return; }
   const fd = new FormData(news);
   window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(fd.get('subject'))}&body=${encodeURIComponent(fd.get('email'))}`;
   news.hidden = true; newsOk.hidden = false; newsOk.focus();
