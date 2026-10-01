@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://bricks-materiaux.be/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr-BE" href="https://bricks-materiaux.be/"/>
+    <xhtml:link rel="alternate" hreflang="nl-BE" href="https://bricks-materiaux.be/nl/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bricks-materiaux.be/en/"/>
+  </url>
+  <url>
+    <loc>https://bricks-materiaux.be/nl/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr-BE" href="https://bricks-materiaux.be/"/>
+    <xhtml:link rel="alternate" hreflang="nl-BE" href="https://bricks-materiaux.be/nl/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bricks-materiaux.be/en/"/>
+  </url>
+  <url>
+    <loc>https://bricks-materiaux.be/en/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr-BE" href="https://bricks-materiaux.be/"/>
+    <xhtml:link rel="alternate" hreflang="nl-BE" href="https://bricks-materiaux.be/nl/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bricks-materiaux.be/en/"/>
+  </url>
+</urlset>
